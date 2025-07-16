@@ -76,6 +76,16 @@ Some of the expected results given the default data in the database are:
 ○ Test 4: request at 10:00 on the 15th for product 35455 for brand 1: 2 Prices offered (Price.size(2))
 ○ Test 5: request at 21:00 on the 16th for product 35455 for brand 1: 2 Prices offered (Price.size(2))
 
+## Testing Executions with Insomnia
+![Insomnia Successful Test](docs/insomnia_successful_request.png)
+
+![Insomnia Unsuccessful Test](docs/insomnia_unsuccessful_request.png)
+
+![Swagger Successful Test](docs/swagger_successful_request.png)
+
+![Swagger Unsuccessful Test](docs/swagger_unsuccessful_request.png)
+
+
 ## API
 
 API's documentation is automatically generated and stored in: http://localhost:8080/swagger-ui/index.html
