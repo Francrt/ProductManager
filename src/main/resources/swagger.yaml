@@ -1,0 +1,107 @@
+openapi: 3.0.4
+info:
+  title: Product Manager API - OpenAPI 3.0
+  description: Product Manager API is a simple REST API that allows you to manage product's prices in an h2 database.
+    It provides endpoints to retrieve prices information about products.
+  version: 1.0.0
+  contact:
+    name: Fran Artime
+    url: https://www.linkedin.com/in/francrt
+tags:
+  - name: prices
+    description: All operations about products
+
+
+paths:
+  /prices:
+    get:
+      tags:
+        - prices
+      summary: Retrieve all existing prices.
+      description: Retrieves all existing prices in the h2 database.
+      operationId: getPrices
+      parameters:
+        - name: appDate
+          in: query
+          description: Filter products by application date.
+          schema:
+            type: string
+            format: date-time
+          required: false
+        - name: productId
+          in: query
+          description: Filter products by product ID.
+          schema:
+            type: integer
+            format: int64
+          required: false
+        - name: brandId
+          in: query
+          description: Filter products by brand ID.
+          schema:
+            type: integer
+            format: int64
+          required: false
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PricesDTO'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDTO"
+
+components:
+  schemas:
+    PricesDTO:
+      type: object
+      properties:
+        priceList:
+          type: integer
+          format: int64
+          description: Identificador de la lista de precios
+        brandId:
+          type: integer
+          format: int64
+          description: Identificador de la marca
+        productId:
+          type: integer
+          format: int64
+          description: Identificador del producto
+        startDate:
+          type: string
+          format: date-time
+          description: Fecha de inicio de la tarifa
+        priority:
+          type: integer
+          format: int32
+          description: Prioridad de la tarifa
+        price:
+          type: number
+          format: double
+          description: Precio del producto
+        endDate:
+          type: string
+          format: date-time
+          description: Fecha de fin de la tarifa
+        currency:
+          type: string
+          description: Moneda del precio
+
+    ErrorDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
