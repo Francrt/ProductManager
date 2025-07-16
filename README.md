@@ -64,17 +64,24 @@ Update the files inside `src/main/resources/` to customize your configuration::
 
 Run tests with Maven: mvn test
 
-Through Swagger, you can check the API, tho endPoint is not functional yet due to
-missing Swagger Customization required to recieve a proper LocalDateTime object, sorry
-for the inconvenienco.
+### PriceServiceTest
 
-Some of the expected results given the default data in the database are:
+- Parameterized tests for different date/time requests, product, and brand combinations.
+- Verifies that the service returns exactly one price (the one with the highest priority) for each valid request.
+- Ensures correct filtering and business logic for price selection.
 
-○ Test 1: request at 10:00 on the 14th for product 35455 for brand 1: 1 Price offered (Price.size(1))
-○ Test 2: request at 16:00 on the 14th for product 35455 for brand 1: 2 Prices offered (Price.size(2))
-○ Test 3: request at 21:00 on the 14th for product 35455 for brand 1: 1 Price offered (Price.size(1))
-○ Test 4: request at 10:00 on the 15th for product 35455 for brand 1: 2 Prices offered (Price.size(2))
-○ Test 5: request at 21:00 on the 16th for product 35455 for brand 1: 2 Prices offered (Price.size(2))
+**Example tested cases:**
+- Request at 10:00 on June 14th for product 35455 and brand 1: expects 1 price.
+- Request at 16:00 on June 14th for product 35455 and brand 1: expects 1 price.
+- Request at 21:00 on June 14th for product 35455 and brand 1: expects 1 price.
+- Request at 10:00 on June 15th for product 35455 and brand 1: expects 1 price.
+- Request at 21:00 on June 16th for product 35455 and brand 1: expects 1 price.
+
+### Architectural Tests (Naming and Layering)
+
+- Verifies that the project follows the intended hexagonal (ports and adapters) architecture.
+- Checks that dependencies between packages (domain, application, infrastructure, etc.) are respected.
+- Ensures that domain logic is not coupled to infrastructure or external frameworks.
 
 ## Testing Executions with Insomnia
 ![Insomnia Successful Test](docs/insomnia_successful_request.png)
@@ -90,6 +97,6 @@ Some of the expected results given the default data in the database are:
 
 API's documentation is automatically generated and stored in: http://localhost:8080/swagger-ui/index.html
 
-## Autor
+## Author
 Francrt
 
