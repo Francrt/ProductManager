@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>git.francrt</groupId>
-  <artifactId>ProductManager</artifactId>
-  <packaging>war</packaging>
+  <artifactId>productmanager</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>ProductManager Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  <packaging>jar</packaging>
+  <name>productmanager</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>21</java.version>
@@ -95,6 +94,17 @@
               <inputSpec>${project.basedir}/src/main/resources/swagger.yaml</inputSpec>
               <generatorName>spring</generatorName>
               <output>${project.basedir}/target/generated-sources/openapi</output>
+              <generateApiTests>false</generateApiTests>
+              <generateModelTests>false</generateModelTests>
+              <typeMappings>
+                <typeMapping>string+localDateTime=LocalDateTime</typeMapping>
+                <typeMapping>string+localTime=LocalTime</typeMapping>
+                <typeMapping>Double=java.math.BigDecimal</typeMapping>
+              </typeMappings>
+              <schemaMappings>
+                <mapping>LocalDateTime=java.time.LocalDateTime</mapping>
+                <mapping>LocalTime=java.time.LocalTime</mapping>
+              </schemaMappings>
               <configOptions>
                 <dateLibrary>java8</dateLibrary>
                 <useJakartaEe>true</useJakartaEe>
@@ -128,7 +138,31 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>
+        <configuration>
+          <excludes>
+            <exclude>org/openapitools/**</exclude>
+          </excludes>
+        </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <!-- remove the unwanted generated testcases by the spring generator of openapi -->
+                <delete dir="${project.build.directory}/generated-sources/openapi/src/test" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>
