@@ -1,7 +1,8 @@
 package git.francrt.infrastructure.configuration;
 
-import git.francrt.application.ports.output.PricesRepository;
+import git.francrt.infrastructure.adapter.repository.PricesRepository;
 import git.francrt.domain.model.Prices;
+import git.francrt.utils.Constants;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +36,7 @@ public class DBInitializer implements CommandLineRunner {
                         .endDate(LocalDateTime.of(2020, 12, 31, 23, 59, 59))
                         .priority(0)
                         .price(new BigDecimal("35.50"))
-                        .currency("EUR")
+                        .currency(Constants.CURRENCY)
                         .priceList(1L)
                         .build();
         return repository.save(price);
@@ -49,7 +50,7 @@ public class DBInitializer implements CommandLineRunner {
                 .endDate(LocalDateTime.of(2020, 6, 14, 18, 30, 0))
                 .priority(1)
                 .price(new BigDecimal("25.45"))
-                .currency("EUR")
+                .currency(Constants.CURRENCY)
                 .priceList(2L)
                 .build();
         return repository.save(price);
@@ -63,7 +64,7 @@ public class DBInitializer implements CommandLineRunner {
                 .endDate(LocalDateTime.of(2020, 6, 15, 11, 0, 0))
                 .priority(1)
                 .price(new BigDecimal("30.50"))
-                .currency("EUR")
+                .currency(Constants.CURRENCY)
                 .priceList(3L)
                 .build();
         return repository.save(price);
@@ -77,7 +78,7 @@ public class DBInitializer implements CommandLineRunner {
                 .endDate(LocalDateTime.of(2020, 12, 31, 23, 59, 59))
                 .priority(0)
                 .price(new BigDecimal("38.95"))
-                .currency("EUR")
+                .currency(Constants.CURRENCY)
                 .priceList(4L)
                 .build();
         return repository.save(price);

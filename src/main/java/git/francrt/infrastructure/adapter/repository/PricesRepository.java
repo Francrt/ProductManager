@@ -1,5 +1,6 @@
-package git.francrt.application.ports.output;
+package git.francrt.infrastructure.adapter.repository;
 
+import git.francrt.application.ports.output.PricesJPAPort;
 import git.francrt.domain.model.Prices;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface PricesRepository extends JpaRepository<Prices, Long> {
+public interface PricesRepository extends JpaRepository<Prices, Long>, PricesJPAPort {
 
     List<Prices> findByProductId(Long productId);
     List<Prices> findByBrandId(Long brandId);

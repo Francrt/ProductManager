@@ -1,4 +1,4 @@
-package git.francrt.application.ports.input;
+package git.francrt.infrastructure.adapter.rest;
 
 import git.francrt.application.ports.context.PricesContext;
 import git.francrt.application.service.mapper.PricesConverter;
