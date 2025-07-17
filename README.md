@@ -83,11 +83,14 @@ Run tests with Maven: mvn test
 - Checks that dependencies between packages (domain, application, infrastructure, etc.) are respected.
 - Ensures that domain logic is not coupled to infrastructure or external frameworks.
 
-## Testing Executions with Insomnia
+## Testing Executions
+
+ ### Insomnia
 ![Insomnia Successful Test](docs/insomnia_successful_request.png)
 
 ![Insomnia Unsuccessful Test](docs/insomnia_unsuccessful_request.png)
 
+ ### Swagger
 ![Swagger Successful Test](docs/swagger_successful_request.png)
 
 ![Swagger Unsuccessful Test](docs/swagger_unsuccessful_request.png)

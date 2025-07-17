@@ -37,7 +37,9 @@ class PricesServiceTests {
     @MethodSource("provideValidRequests")
     void testValidRequests(LocalDateTime date) {
         var price = context.getPrices(35455L, 1L, date);
-        assertThat(price).isNotNull().hasSize(1);
+        assertThat(price).isNotNull();
+        assertThat(price.getStartDate()).isBeforeOrEqualTo(date);
+        assertThat(price.getEndDate()).isAfterOrEqualTo(date);
     }
 
     @Test
@@ -67,8 +69,8 @@ class PricesServiceTests {
     void testMultipleResultsReturnsHighestPriority() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 18, 30);
         var price = context.getPrices(35455L, 1L, date);
-        assertThat(price).isNotNull().hasSize(1);
-        assertThat(price.getFirst().getPriority()).isEqualTo(1);
+        assertThat(price).isNotNull();
+        assertThat(price.getPriority()).isEqualTo(1);
     }
 
     @Test

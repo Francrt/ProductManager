@@ -48,8 +48,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/PricesDTO'
         default:
           description: Unexpected error
@@ -79,10 +77,6 @@ components:
           type: string
           format: localDateTime
           description: Fecha de inicio de la tarifa
-        priority:
-          type: integer
-          format: int32
-          description: Prioridad de la tarifa
         price:
           type: number
           format: double

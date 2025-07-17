@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,28 +19,22 @@ public class PricesService implements PricesContext {
     private final PricesJPAPort jpaPort;
 
     @Override
-    public List<Prices> getPrices(Long productId, Long brandId, LocalDateTime appDate) {
+    public Prices getPrices(Long productId, Long brandId, LocalDateTime appDate) {
 
         PricesValidation.validateAll(productId, brandId, appDate);
 
-        /**
-         * This whole code block could be replaced with a filtering method.
-         * repository.findAll().stream().filter(price -> price.getProductId().equals(productId)...
-         * Considering the sice of our dataset, this is probably the best approach, but
-         * taking into account scalability I decided to use the repository methods.
+        /*
+         * Validate that all parameters are provided in order to reassure business integrity.
+         * Infrastructure layer could be either externalized or not always grant this validation.
          */
-
         if (productId != null && brandId != null && appDate != null) {
             List<Prices> upFront = jpaPort.findByMultipleParameters(productId, brandId, appDate);
 
-            if (upFront.isEmpty()){
-                throw new PricesNotFoundException("No prices found for the given parameters: productId=" + productId + ", brandId=" + brandId + ", appDate=" + appDate);
-            }
-
-            return List.of(upFront.stream()
-                            .max((p1, p2) -> p1.getPriority().compareTo(p2.getPriority()))
-                            .get()
-            );
+            return upFront.stream()
+                    .max(Comparator.comparing(Prices::getPriority))
+                    .orElseThrow(() -> new PricesNotFoundException(
+                            "No prices found for the given parameters: productId=" + productId + ", brandId=" + brandId + ", appDate=" + appDate
+                    ));
         } else {
             throw new IllegalArgumentException("All parameters must be provided: productId, brandId, appDate");
         }
